@@ -1,5 +1,8 @@
 # patient_matcher
 
+## Installing prerequisites
+`python -m pip install -r requirements.txt`
+
 ## Usage
 ```python
 from jake_match import PatientMatcher
