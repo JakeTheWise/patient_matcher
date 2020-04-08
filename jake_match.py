@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 
 class PatientMatcher():
 
-	def __init__(self, excel_file, **read_xls_args):
+	def __init__(self, excel_filepath: str, **read_xls_args):
 		'''
 		Reads in an excel file of patient comorbidity data upon which to perform matching.
 		The file most have a column labeled BIPOLAR.
@@ -25,7 +25,7 @@ class PatientMatcher():
 		-------
 		matcher: PatientMatcher
 		'''
-		data = pd.read_excel(excel_file, **read_xls_args)
+		data = pd.read_excel(excel_filepath, **read_xls_args)
 
 		# filter constant columns
 		data = data.loc[:, data.std() > 0]
@@ -38,7 +38,7 @@ class PatientMatcher():
 
 		self.data = data
 
-	def get_best_matches(self, feature_weights=None, norm_order=2):
+	def get_best_matches(self, feature_weights: dict = None, norm_order: int = 2) -> pd.DataFrame:
 		'''
 		Calculates the best match for each bipolar patient
 		given no bipolar patient can be matched to the same control patient.
@@ -116,7 +116,7 @@ class PatientMatcher():
 
 		return matches
 
-	def decomp_viz(self, matches, decomp_method='PCA', random_state=42, **algo_kwargs):
+	def decomp_viz(self, matches: pd.DataFrame, decomp_method: str = 'PCA', random_state: int = 42, **algo_kwargs):
 		'''
 		A "sanity checker" to visualize how well the matching algorithm performed. May only be called after calling get_best_matches.
 
